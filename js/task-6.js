@@ -8,6 +8,10 @@ const createButton = document.querySelector('[data-create]');
 const destroyButton = document.querySelector('[data-destroy]');
 const boxesContainer = document.getElementById('boxes');
 
+function destroyBoxes() {
+  boxesContainer.innerHTML = '';
+}
+
 createButton.addEventListener('click', () => {
   const amount = parseInt(input.value);
 
@@ -26,14 +30,18 @@ function createBoxes(amount) {
   destroyBoxes();
 
   let size = 30;
-  let boxesHTML = '';
+  const fragment = document.createDocumentFragment();
 
   for (let i = 0; i < amount; i++) {
-    const color = getRandomHexColor();
-    boxesHTML += `<div style="width: ${size}px; height: ${size}px; background-color: ${color}; margin-bottom: 10px;"></div>`;
+    const box = document.createElement('div');
+    box.style.width = `${size}px`;
+    box.style.height = `${size}px`;
+    box.style.backgroundColor = getRandomHexColor();
+    box.style.marginBottom = '10px';
+
+    fragment.appendChild(box);
     size += 10;
   }
 
-  boxesContainer.insertAdjacentHTML('beforeend', boxesHTML);
+  boxesContainer.appendChild(fragment);
 }
-
